@@ -1,4 +1,4 @@
-/*pipeline{
+pipeline{
 
     agent {
         //recuperer l'image docker officielle de playwright
@@ -14,6 +14,7 @@
         stage('clonner le projet'){
             steps{
                 //creer supprimer le repo
+                //sh 'apt-get update && apt-get install -y git'
                 sh "rm -rf repo"
            
                 //cloner le repo
@@ -47,11 +48,11 @@
 
     //git clone
     //npm install
-    //npx playwright test*/
+    //npx playwright test
 
 
 
-    pipeline {
+   /* pipeline {
     agent {
         docker {
             image 'playwright/chromium:playwright-1.56.1'
@@ -78,4 +79,4 @@
             }
         }
     }
-}
+}*/
