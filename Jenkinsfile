@@ -73,7 +73,7 @@
                 sh 'npx playwright --version'
 
                 // Lancer les tests
-                //sh 'npx playwright test --project=chromium'
+                sh 'npx playwright test --project=chromium'
             }
         }
     }
