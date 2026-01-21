@@ -14,7 +14,7 @@ pipeline{
         stage('clonner le projet'){
             steps{
                 //creer supprimer le repo
-                //sh 'apt-get update && apt-get install -y git'
+                sh 'apt-get update && apt-get install -y git'
                 sh "rm -rf repo"
            
                 //cloner le repo
