@@ -1,4 +1,4 @@
-pipeline{
+/*pipeline{
 
     agent {
         //recuperer l'image docker officielle de playwright
@@ -47,4 +47,34 @@ pipeline{
 
     //git clone
     //npm install
-    //npx playwright test
+    //npx playwright test*/
+
+
+
+    pipeline {
+    agent {
+        docker {
+            image 'playwright/chromium:playwright-1.56.1'
+            args '--user=root'
+        }
+    }
+
+    stages {
+        stage('Setup & Tests') {
+            steps {
+                // Vérifier Node et npm
+                sh 'node --version'
+                sh 'npm --version'
+
+                // Installer les dépendances (Playwright compris)
+                sh 'npm install'
+
+                // Vérifier Playwright
+                sh 'npx playwright --version'
+
+                // Lancer les tests
+                sh 'npx playwright test --project=chromium'
+            }
+        }
+    }
+}
