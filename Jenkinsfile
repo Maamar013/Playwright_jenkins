@@ -17,20 +17,20 @@ pipeline{
                 sh "rm -rf repo"
            
                 //cloner le repo
-                //sh "git clone https://github.com/Maamar013/Playwright_jenkins.git repo"
+                sh "git clone https://github.com/Maamar013/Playwright_jenkins.git repo"
             
             //verifier la version de nodejs et playwright
-            
+             dir('repo'){
+                    //installer les dependances
+                sh "npm install"
+                sh "npx playwright test --project=chromium"
+                }    
                 sh "node --version"
                 sh "npx playwright --version"
             
             
                 //se positionner dans le dossier du projet
-                dir('repo'){
-                    //installer les dependances
-                    sh "npm install"
-                    sh "npx playwright test --project=chromium"
-                }
+               
             }
 
 
