@@ -4,7 +4,7 @@ pipeline{
         //recuperer l'image docker officielle de playwright
         docker{
             //specifier l'image
-            image 'mcr.microsoft.com/playwright/chromium:v1.56.1'
+            image 'playwright/chromium:playwright-1.56.1'
             //donner les droits root
             args '--user=root --entrypoint=""'
         }
