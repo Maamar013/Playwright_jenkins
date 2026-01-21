@@ -68,6 +68,7 @@
 
                 // Installer les dépendances (Playwright compris)
                 sh 'npm install'
+                sh 'npx playwright install'
 
                 // Vérifier Playwright
                 sh 'npx playwright --version'
