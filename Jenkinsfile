@@ -1,4 +1,4 @@
-pipline{
+pipeline{
 
     agent {
         //recuperer l'image docker officielle de playwright
