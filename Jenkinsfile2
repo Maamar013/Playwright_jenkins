@@ -37,6 +37,8 @@ pipeline {
         stage('Exécution des tests Playwright') {
             steps {
                 dir('repo') {
+                     sh 'npm ci'
+                        sh 'npx playwright --version'
                     script { if (params.Navigateur == 'chromium')
                     {sh 'npx playwright test --project=chromium --grep @valid'
 
