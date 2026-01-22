@@ -1,10 +1,32 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            args '--user=root'
+        }
+    }
 
     stages {
-        stage('Hello') {
+
+        stage('Préparation du projet') {
             steps {
-                echo 'Hello World'
+                sh 'node -v'
+                sh 'playwright --version'
+
+                sh 'rm -rf repo'
+                sh 'git clone https://github.com/QP16CAP/PlaywrightJENKINS.git repo'
+
+                dir('repo') {
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('Exécution des tests valides') {
+            steps {
+                dir('repo') {
+                    sh 'npx playwright test --grep @valid --project=chromium'
+                }
             }
         }
     }
