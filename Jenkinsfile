@@ -1,4 +1,4 @@
-pipeline{
+/*pipeline{
 
     agent {
         //recuperer l'image docker officielle de playwright
@@ -48,11 +48,11 @@ pipeline{
 
     //git clone
     //npm install
-    //npx playwright test
+    //npx playwright test*/
 
 
 
-   /* pipeline {
+    pipeline {
     agent {
         docker {
             image 'playwright/chromium:playwright-1.56.1'
@@ -60,6 +60,8 @@ pipeline{
         }
     }
 
+    parameters {
+        choice(name: 'navigateur', choices:['chromium','firefox','webkit'], defaultValue: 'chromium', description: 'Choisir le navigateur pour les tests Playwright')
     stages {
         stage('Setup & Tests') {
             steps {
@@ -75,8 +77,16 @@ pipeline{
                 sh 'npx playwright --version'
 
                 // Lancer les tests
-                sh 'npx playwright test --project=chromium'
+                //sh 'npx playwright test --project=chromium'
+                script {
+                    if(params.navigateur == 'chromium') {
+                        sh 'npx playwright test --project=chromium'
+                    } else{
+                        echo 'veuillez choisir un navigateur valide'
+                    }
+                }
             }
         }
+        }
     }
-}*/
+}
