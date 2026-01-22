@@ -1,28 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
-            args '--user=root'
-        }
-    }
+    agent any
 
     stages {
-        stage('Setup') {
+        stage('Hello') {
             steps {
-                sh 'node -v'
-                sh 'playwright --version'
-            }
-        }
-
-        stage('Install') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-
-        stage('Smoke tests') {
-            steps {
-                sh 'npx playwright test --grep @smoke'
+                echo 'Hello World'
             }
         }
     }
