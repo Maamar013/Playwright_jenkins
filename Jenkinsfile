@@ -32,7 +32,7 @@ pipeline {
                     sh 'npm ci'
                     sh 'npx playwright --version'
 
-                    sh'npx playwright --reporter=allure-playwright'
+                    //sh'npx playwright --reporter=allure-playwright'
                 }
             }
         }
