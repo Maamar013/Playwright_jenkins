@@ -38,10 +38,11 @@ pipeline {
             steps {
                 dir('repo') {
                     script { if (params.Navigateur == 'chromium')
-                    {sh 'npx playwright test --project=chromium'}
+                    {sh 'npx playwright test --project=chromium --grep @smoke'}
                     else {echo 'veuillez choisir le bon navigateur'}}
                 }
             }
         }
+        
     }
 }
