@@ -54,11 +54,6 @@ pipeline {
 
 
          stage('Lancer jenkinsfile2') {
-            when {
-                expression {
-                    currentBuild.currentResult == 'SUCCESS'
-                }
-            }
             steps {
                 sh 'rm -rf allure-results/*'
                 unstash 'allure-results'
