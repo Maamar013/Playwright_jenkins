@@ -1,94 +1,47 @@
-/*pipeline{
-
+pipeline {
     agent {
-        //recuperer l'image docker officielle de playwright
-        docker{
-            //specifier l'image
-            image 'playwright/chromium:playwright-1.56.1'
-            //donner les droits root
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.57.0-noble'
+            // 'playwright/chromium:playwright-1.56.1'
             args '--user=root --entrypoint=""'
         }
     }
-    stages{
-        //clonner le projet
-        stage('clonner le projet'){
-            steps{
-                //creer supprimer le repo
-                sh 'apt-get update && apt-get install -y git'
-                sh "rm -rf repo"
-           
-                //cloner le repo
-                sh "git clone https://github.com/Maamar013/Playwright_jenkins.git repo"
-            
-            //verifier la version de nodejs et playwright
-             dir('repo'){
-                    //installer les dependances
-                sh "npm install"
-                sh "npx playwright test --project=chromium"
-                }    
-                sh "node --version"
-                sh "npx playwright --version"
-            
-            
-                //se positionner dans le dossier du projet
-               
-            }
-
-
-            
-
-
-
-
-
-
-        }
-    }
-}
-
-    //git clone
-    //npm install
-    //npx playwright test*/
-
-
-
-    pipeline {
-    agent {
-        docker {
-            image 'playwright/chromium:playwright-1.56.1'
-            args '--user=root'
-        }
+    parameters{
+        choice(name: 'Navigateur', choices: ['chromium','webkit', 'firefox'], description: ('selectionner un navigateur pour le test'))
     }
 
-    parameters {
-        choice(name: 'navigateur', choices:['chromium','firefox','webkit'])
-        booleanParam(name: 'chromium',defaultValue: true)
-        }
     stages {
-        stage('Setup & Tests') {
+        stage('Préparation du projet') {
             steps {
-                // Vérifier Node et npm
-                sh 'node --version'
-                sh 'npm --version'
-
-                // Installer les dépendances (Playwright compris)
-                sh 'npm install'
-                sh 'npx playwright install'
-
-                // Vérifier Playwright
+                sh 'node -v'
                 sh 'npx playwright --version'
 
-                // Lancer les tests
-                //sh 'npx playwright test --project=chromium'
-                script {
-                    if(params.navigateur == 'chromium') {
-                        sh 'npx playwright test --project=chromium'
-                    } else{
-                        echo 'veuillez choisir un navigateur valide'
-                    }
+                // Installer git
+                //sh 'apt-get update && apt-get install -y git'
+
+                // Supprimer l'ancien repo si présent
+                sh 'rm -rf repo'
+
+                // Cloner le repo
+                sh 'git clone https://github.com/QP16CAP/PlaywrightJENKINS.git repo'
+
+                // Installer les dépendances et navigateurs Playwright
+                dir('repo') {
+                    //sh 'npm install'
+                    //sh 'npx playwright install'
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('Exécution des tests Playwright') {
+            steps {
+                dir('repo') {
+                    script { if (params.Navigateur == 'chromium')
+                    {sh 'npx playwright test --project=chromium'}
+                    else {echo 'veuillez choisir le bon navigateur'}}
                 }
             }
         }
     }
-    
 }
