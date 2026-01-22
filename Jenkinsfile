@@ -14,7 +14,7 @@ pipeline {
         stage('Préparation du projet') {
             steps {
                 sh 'node -v'
-                sh 'npx playwright --version'
+                
 
                 // Installer git
                 //sh 'apt-get update && apt-get install -y git'
@@ -30,6 +30,7 @@ pipeline {
                     //sh 'npm install'
                     //sh 'npx playwright install'
                     sh 'npm ci'
+                    sh 'npx playwright --version'
                 }
             }
         }
