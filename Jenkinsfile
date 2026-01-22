@@ -67,7 +67,7 @@ pipeline {
             }
            
         }
-}
-
+    }
+    }
 //lancer allure report
 //npx playwright test --project=chromium --grep @smoke --reporter=list,allure-playwright
