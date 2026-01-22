@@ -53,17 +53,19 @@ pipeline {
 
 
 
-         stage('Lancer jenkinsfile2') {
-            steps {
-                sh 'rm -rf allure-results/*'
+        
+    }
+    post {
+        always {
+            dir('repo') {
+                unstash 'allure-results'
+            }
+            sh 'rm -rf allure-results/*'
                 unstash 'allure-results'
                 archiveArtifacts 'allure-results/*'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results/']]
                 //build job: 'Jenkinsfile2', wait: true
-            }
         }
-        
-    }
 }
 
 //lancer allure report
