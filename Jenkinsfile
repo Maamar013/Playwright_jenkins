@@ -60,7 +60,10 @@
         }
     }
 
-    parameters {choice(name: 'navigateur', choices:['chromium','firefox','webkit'], defaultValue: 'chromium', description: 'Choisir le navigateur pour les tests Playwright')}
+    parameters {
+        choice(name: 'navigateur', choices:['chromium','firefox','webkit'])
+        booleanParam(name: 'chromium',defaultValue: true)
+        }
     stages {
         stage('Setup & Tests') {
             steps {
