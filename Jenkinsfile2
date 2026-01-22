@@ -13,10 +13,10 @@ pipeline {
                 sh 'node -v'
                 sh 'playwright --version'
 
-                sh 'rm -rf repo'
-                sh 'git clone https://github.com/QP16CAP/PlaywrightJENKINS.git repo'
+                sh 'rm -rf rep'
+                sh 'git clone https://github.com/QP16CAP/PlaywrightJENKINS.git rep'
 
-                dir('repo') {
+                dir('rep') {
                     sh 'npm ci'
                 }
             }
@@ -24,7 +24,7 @@ pipeline {
 
         stage('Exécution des tests valides') {
             steps {
-                dir('repo') {
+                dir('rep') {
                     sh 'npx playwright test --grep @valid --project=chromium'
                 }
             }
