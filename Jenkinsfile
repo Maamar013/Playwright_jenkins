@@ -59,12 +59,13 @@ pipeline {
         always {
             dir('repo') {
                 unstash 'allure-results'
-            }
-            sh 'rm -rf allure-results/*'
+                sh 'rm -rf allure-results/*'
                 unstash 'allure-results'
                 archiveArtifacts 'allure-results/*'
                 allure includeProperties: false, jdk: '', results: [[path: 'allure-results/']]
                 //build job: 'Jenkinsfile2', wait: true
+            }
+           
         }
 }
 
