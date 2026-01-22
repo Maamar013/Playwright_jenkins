@@ -38,7 +38,11 @@ pipeline {
             steps {
                 dir('repo') {
                     script { if (params.Navigateur == 'chromium')
-                    {sh 'npx playwright test --project=chromium --grep @smoke'}
+                    {sh 'npx playwright test --project=chromium --grep @smoke'
+
+                    build job: 'jenkinsfile2', wait: false
+
+                    }
                     else {echo 'veuillez choisir le bon navigateur'}}
                 }
             }
