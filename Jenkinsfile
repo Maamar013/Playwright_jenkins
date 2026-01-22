@@ -31,6 +31,8 @@ pipeline {
                     //sh 'npx playwright install'
                     sh 'npm ci'
                     sh 'npx playwright --version'
+
+                    sh'npx playwright --reporter=allure-playwright'
                 }
             }
         }
@@ -39,8 +41,9 @@ pipeline {
             steps {
                 dir('repo') {
                     script { if (params.Navigateur == 'chromium')
-                    {sh 'npx playwright test --project=chromium --grep @smoke'
-
+                    {//sh 'npx playwright test --project=chromium --grep @smoke'
+                    sh'npx playwright test --project=chromium --grep @smoke --reporter=allure-playwright'
+                    stash name: 'allure-results', includes: 'allure-results/*'
                    
                     }
                     else {echo 'veuillez choisir le bon navigateur'}}
@@ -57,9 +60,16 @@ pipeline {
                 }
             }
             steps {
-                build job: 'Jenkinsfile2', wait: true
+                sh 'rm -rf allure-results/*'
+                unstash 'allure-results'
+                archiveArtifacts 'allure-results/*'
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results/']]
+                //build job: 'Jenkinsfile2', wait: true
             }
         }
         
     }
 }
+
+//lancer allure report
+//npx playwright test --project=chromium --grep @smoke --reporter=list,allure-playwright
