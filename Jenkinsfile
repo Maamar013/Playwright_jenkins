@@ -42,7 +42,7 @@ pipeline {
                 dir('repo') {
                     script { if (params.Navigateur == 'chromium')
                     {//sh 'npx playwright test --project=chromium --grep @smoke'
-                    sh'npx playwright test --project=chromium --grep @smoke --reporter=allure-playwright'
+                    sh 'npx playwright test --project=chromium --grep @smoke --reporter=allure-playwright'
                     stash name: 'allure-results', includes: 'allure-results/*'
                    
                     }
@@ -58,7 +58,7 @@ pipeline {
     post {
         always {
             dir('repo') {
-                unstash 'allure-results'
+                //unstash 'allure-results'
                 sh 'rm -rf allure-results/*'
                 unstash 'allure-results'
                 archiveArtifacts 'allure-results/*'
