@@ -64,7 +64,7 @@ pipeline {
                 //unstash 'allure-results'
                 //archiveArtifacts 'allure-results/*'
                 //allure includeProperties: false, jdk: '', results: [[path: 'allure-results/']]
-                //build job: 'Jenkinsfile2', wait: true
+                build job: 'Jenkinsfile2', wait: true
             }
         }
         
