@@ -41,11 +41,23 @@ pipeline {
                     script { if (params.Navigateur == 'chromium')
                     {sh 'npx playwright test --project=chromium --grep @smoke'
 
-                    build job: 'jenkinsfile2', wait: false
-
+                   
                     }
                     else {echo 'veuillez choisir le bon navigateur'}}
                 }
+            }
+        }
+
+
+
+         stage('Lancer jenkinsfile2') {
+            when {
+                expression {
+                    currentBuild.currentResult == 'SUCCESS'
+                }
+            }
+            steps {
+                build job: 'Jenkinsfile2', wait: true
             }
         }
         
